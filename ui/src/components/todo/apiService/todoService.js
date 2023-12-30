@@ -5,3 +5,5 @@ const axiosClient = axios.create({
 })
 
 export const retrieveTodosByUsername = (username) => axiosClient.get(`/todos/${username}`);
+
+export const deleteTodoById = (id) => axiosClient.delete(`/todos/${id}`);

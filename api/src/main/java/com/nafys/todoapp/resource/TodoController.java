@@ -2,6 +2,7 @@ package com.nafys.todoapp.resource;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,14 +35,15 @@ public class TodoController {
 //	}
 	
 	@GetMapping("/todos/{username}")
-	public List<Todo> getAll(@PathVariable(value = "username") String username ){
+	public List<Todo> getAll(@PathVariable String username ){
 		List<Todo> todos = todoRepository.findByUsername(username);
 		return todos;
 	}
 	
 	@DeleteMapping("/todos/{id}")
-	public void delete(Long id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		todoRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

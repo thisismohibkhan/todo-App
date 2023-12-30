@@ -21,7 +21,7 @@ function HeaderComponent(){
                         <ul className='navbar-nav'>
                             <li className='nav-item fs-5'>
                                 {isAuthenticated && 
-                                    <Link  className='nav-link' to='/welcome/mohib'>Home</Link>}
+                                    <Link  className='nav-link' to='/welcome/:username'>Home</Link>}
                             </li>
                             <li className='nav-item fs-5'>
                                 {isAuthenticated && 

@@ -5,15 +5,18 @@ import './TodoApp.css';
 export default function TodoApp(){
     return (
     <div className="TodoApp">
+        <HeaderComponent/>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={ <LoginComponent/>}></Route>
                 <Route path="/login" element={ <LoginComponent/>}></Route>
                 <Route path="/welcome/:username" element={<WelcomeComponent/>}></Route>
                 <Route path="/todos" element={<ListTodosComponent/>}></Route>
+                <Route path="/logout" element={<LogoutComponent/>}></Route>
                 <Route path="*" element={<ErrorComponent/>}></Route>
             </Routes>
         </BrowserRouter>
+        <FooterComponent/>
     </div>
     );
 }
@@ -89,6 +92,33 @@ function ErrorComponent(){
             <div >
                404: Page not found
             </div>
+        </div>
+    );
+}
+
+function HeaderComponent(){
+    return (
+        <div className="headerComponent">
+            <h1>Header</h1>
+            <hr/>
+        </div>
+    );
+}
+
+function FooterComponent(){
+    return (
+        <div className="footerComponent">
+            <hr/>
+            <h1>Footer</h1>
+        </div>
+    );
+}
+
+function LogoutComponent(){
+    return (
+        <div className="logoutComponent">
+            <h1>You are logged out</h1>
+            <h3>Thank you</h3>
         </div>
     );
 }

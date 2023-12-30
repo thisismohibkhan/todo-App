@@ -1,10 +1,28 @@
+import { useEffect, useState } from "react";
+import { retrieveTodosByUsername } from "./apiService/todoService";
 function ListTodosComponent(){
+
     const date = new Date();
-    const todos = [
-        {id:1, description: 'Learn AWS', isDone: false, targetDate: date},
-        {id:2, description: 'Learn Docker', isDone: false, targetDate: date},
-        {id:3, description: 'Learn Git', isDone: false, targetDate: date}
-    ];
+    // const todos = [
+    //     {id:1, description: 'Learn AWS', isDone: false, targetDate: date},
+    //     {id:2, description: 'Learn Docker', isDone: false, targetDate: date},
+    //     {id:3, description: 'Learn Git', isDone: false, targetDate: date}
+    // ];
+    const [todos , setTodos] = useState([]);
+
+    useEffect (
+        () => refreshTodos(), []
+    )
+
+    function refreshTodos(){
+        retrieveTodosByUsername('mohib')
+        .then(resp =>{
+                setTodos(resp.data);
+            })
+        .catch(error => console.log(error))
+        .finally(() => console.log('cleanup'));
+    }
+    
 
     return (
         <div className="container">
@@ -21,13 +39,13 @@ function ListTodosComponent(){
                 </thead>
                 <tbody>
                     {
-                    todos.map(
+                    todos?.map(
                         todo => (
                             <tr key={todo.id}>
                             <td>{todo.id}</td>
                             <td>{todo.description}</td>
-                            <td>{todo.isDone.toString()}</td>
-                            <td>{todo.targetDate.toDateString()}</td>
+                            <td>{todo.isDone?.toString()}</td>
+                            <td>{todo.targetDate?.toDateString()}</td>
                         </tr>
                         )
                     )

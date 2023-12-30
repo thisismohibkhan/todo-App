@@ -1,12 +1,18 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import './TodoApp.css';
 
 export default function TodoApp(){
     return (
     <div className="TodoApp">
-        Todo Management Application
-        <LoginComponent/>
-        {/* <WelcomeComponent/> */}
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={ <LoginComponent/>}></Route>
+                <Route path="/login" element={ <LoginComponent/>}></Route>
+                <Route path="/welcome" element={<WelcomeComponent/>}></Route>
+                <Route path="*" element={<ErrorComponent/>}></Route>
+            </Routes>
+        </BrowserRouter>
     </div>
     );
 }
@@ -20,6 +26,8 @@ function LoginComponent(){
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
+    const navigate = useNavigate();
+
     function handleUsernameChange(event){
         setUsername(event.target.value);
     }
@@ -32,6 +40,7 @@ function LoginComponent(){
         if(username === 'mohib' && password === 'khan'){
             setShowSuccessMessage(true);
             setShowErrorMessage(false);
+            navigate('/welcome');
         }else{
             setShowSuccessMessage(false);
             setShowErrorMessage(true);
@@ -40,6 +49,7 @@ function LoginComponent(){
 
     return (
     <div className="LoginComponent">
+        <h1>Login to Todo App</h1>
         {showSuccessMessage && <div className='successMessage'>Authenticated Successfull</div>}
         {showErrorMessage && <div className='errorMessage'>Authentication Failed</div>}
         <div className="loginFOrm">
@@ -62,8 +72,22 @@ function LoginComponent(){
 
 function WelcomeComponent(){
     return (
-    <div className="WelcomeComponent">
-        Welcome Component
-    </div>
+        <div className="WelcomeComponent">
+            <h1>Todo Management Application</h1>
+            <div >
+                Welcome Component
+            </div>
+        </div>
+    );
+}
+
+function ErrorComponent(){
+    return (
+        <div className="errorComponent">
+            <h1>Todo Management Application</h1>
+            <div >
+               404: Page not found
+            </div>
+        </div>
     );
 }

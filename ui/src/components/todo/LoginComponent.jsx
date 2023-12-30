@@ -33,7 +33,6 @@ function LoginComponent(){
     return (
     <div className="LoginComponent">
         <h1>Login to Todo App</h1>
-        {showSuccessMessage && <div className='successMessage'>Authenticated Successfull</div>}
         {showErrorMessage && <div className='errorMessage'>Authentication Failed</div>}
         <div className="loginFOrm">
             <div>

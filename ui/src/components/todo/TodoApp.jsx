@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, useParams, Link } from 'react-router-dom';
 import './TodoApp.css';
 
 export default function TodoApp(){
@@ -10,6 +10,7 @@ export default function TodoApp(){
                 <Route path="/" element={ <LoginComponent/>}></Route>
                 <Route path="/login" element={ <LoginComponent/>}></Route>
                 <Route path="/welcome/:username" element={<WelcomeComponent/>}></Route>
+                <Route path="/todos" element={<ListTodosComponent/>}></Route>
                 <Route path="*" element={<ErrorComponent/>}></Route>
             </Routes>
         </BrowserRouter>
@@ -74,10 +75,9 @@ function WelcomeComponent(){
     const {username} = useParams();
     return (
         <div className="WelcomeComponent">
-            <h1>Todo Management Application</h1>
-            <div >
-                Welcome {username}
-            </div>
+            <h1>Welcome {username}</h1>
+            {/* <div >Manage your todos. <a href="/todos">Go here</a></div> */}
+            <div >Manage your todos. <Link to="/todos">Go here</Link></div>
         </div>
     );
 }
@@ -88,6 +88,47 @@ function ErrorComponent(){
             <h1>Todo Management Application</h1>
             <div >
                404: Page not found
+            </div>
+        </div>
+    );
+}
+
+function ListTodosComponent(){
+    const date = new Date();
+    const todos = [
+        {id:1, description: 'Learn AWS', isDone: false, targetDate: date},
+        {id:2, description: 'Learn Docker', isDone: false, targetDate: date},
+        {id:3, description: 'Learn Git', isDone: false, targetDate: date}
+    ];
+
+    return (
+        <div className="ListTodosComponent">
+            <h1>Things Yoy want to do</h1>
+            <div >
+              <table>
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Description</td>
+                        <td>Done</td>
+                        <td>Target Date</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                    todos.map(
+                        todo => (
+                            <tr key={todo.id}>
+                            <td>{todo.id}</td>
+                            <td>{todo.description}</td>
+                            <td>{todo.isDone.toString()}</td>
+                            <td>{todo.targetDate.toDateString()}</td>
+                        </tr>
+                        )
+                    )
+                }
+                </tbody>
+              </table>
             </div>
         </div>
     );

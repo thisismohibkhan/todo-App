@@ -7,7 +7,6 @@ function LoginComponent(){
     const [username, setUsername] = useState('mohib');
     const [password, setPassword] = useState('khan');
 
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
     const navigate = useNavigate();
@@ -23,15 +22,11 @@ function LoginComponent(){
     }
 
     function handleSubmit(){
-        if(username === 'mohib' && password === 'khan'){
-            authContext.setAuthenticated(true);
-            setShowSuccessMessage(true);
-            setShowErrorMessage(false);
+        const isAuthenticated = authContext.login(username, password);
+        if(isAuthenticated){
             navigate(`/welcome/${username}`);
         }else{
-            setShowSuccessMessage(false);
             setShowErrorMessage(true);
-            authContext.setAuthenticated(false);
         }
     }
 

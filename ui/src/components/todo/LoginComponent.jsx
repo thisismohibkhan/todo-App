@@ -21,8 +21,8 @@ function LoginComponent(){
         setPassword(event.target.value);
     }
 
-    function handleSubmit(){
-        const isAuthenticated = authContext.login(username, password);
+    async function handleSubmit(){
+        const isAuthenticated = await authContext.login(username, password);
         if(isAuthenticated){
             navigate(`/welcome/${username}`);
         }else{

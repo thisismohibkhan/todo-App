@@ -25,6 +25,11 @@ public class TodoController {
 		this.todoRepository = todoRepository;
 	}
 
+	@GetMapping(path = "/basicauth")
+	  public String basicAuthCheck() {
+	    return "Success"; 
+	  }
+	
 	@PostMapping("/todos")
 	public Todo save(Todo todo){
 		Todo savedTodo = todoRepository.save(todo);

@@ -21,13 +21,11 @@ export default function TodoComponent(){
 
 
     function getTodoById(){
-        console.log(id)
         if(id !== '-1'){
             retrieveTodoById(id)
             .then((resp) => {
                 setDescription(resp.data.description);
                 setTargetDate(resp.data.targetDate);
-                //setMessage(`Todo deleted for : ${id}`);
             })
             .catch(error=> console.log(error));
         }
@@ -54,10 +52,7 @@ export default function TodoComponent(){
     }
 
     function validate(values) {
-        let errors = {
-            // description: 'Enter a valid description',
-            // targetDate: 'Enter a valid target date'
-        }
+        let errors = {};
 
         if(values.description.length<5) {
             errors.description = 'Enter atleast 5 characters'

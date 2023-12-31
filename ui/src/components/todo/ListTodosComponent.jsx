@@ -37,10 +37,13 @@ function ListTodosComponent(){
         navigate(`/todos/${id}`);
     }
     
+    function addTodo(){
+        navigate(`/todos/-1`);
+    }
 
     return (
         <div className="container">
-            <h1>Things Yoy want to do</h1>
+            <h1>Things You want to do</h1>
             <div >
                 {message && <div className="alert alert-warning">{message}</div>}
               <table className="table">
@@ -72,6 +75,7 @@ function ListTodosComponent(){
                 </tbody>
               </table>
             </div>
+            <button className="btn btn-success" onClick={addTodo}>Add Todo</button>
         </div>
     );
 }

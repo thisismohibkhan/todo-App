@@ -1,12 +1,5 @@
 import { apiClient } from "./ApiClient";
 
-export const executeBasicAuthenticationService 
-    = (token) => apiClient.get(`/basicauth`,{
-        headers: {
-            Authorization: token
-        }
-    });
-
 export const retrieveTodosByUsername = (username) => apiClient.get(`/todos/${username}`);
 
 export const deleteTodoById = (id) => apiClient.delete(`/todos/${id}`);

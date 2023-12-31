@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { apiClient } from "../apiService/ApiClient";
-import { executeBasicAuthenticationService } from "../apiService/todoService";
+import { executeJWTAuthenticationService } from "./AuthenticationApiService";
 
 //1: Create a Context
 export const AuthContext = createContext();
@@ -11,23 +11,24 @@ export default function AuthProvider({ children }) {
 
     //Put some state in the context
     const [isAuthenticated, setAuthenticated ] = useState(false);
+    const [token, setToken ] = useState(null);
 
     const [username, setUsername ] = useState(null);
 
     async function login(username, password){
 
-        const baToken = 'Basic ' + window.btoa( username + ":" + password )
-
         try {
-            const response = await executeBasicAuthenticationService(baToken);
+            const response = await executeJWTAuthenticationService(username, password);
 
             if(response.status === 200){
+                const jwtToken =  `Bearer ${response.data.token}`;
                 apiClient.interceptors.request.use(
                     (config) => {
                         console.log('intercepting and adding a token')
-                        config.headers.Authorization = baToken
+                        config.headers.Authorization = jwtToken;
                         return config
                     })
+                    setToken(jwtToken);
                     setAuthenticated(true);
                     setUsername(username);
                     return true;
@@ -50,7 +51,7 @@ export default function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={ {isAuthenticated, login, logout, username} }>
+        <AuthContext.Provider value={ {isAuthenticated, login, logout, username, token} }>
             {children}
         </AuthContext.Provider>
     )

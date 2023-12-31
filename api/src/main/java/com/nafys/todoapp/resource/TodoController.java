@@ -1,6 +1,7 @@
 package com.nafys.todoapp.resource;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,11 +29,11 @@ public class TodoController {
 		return savedTodo;
 	}
 	
-//	@GetMapping("/todos/{id}")
-//	public Optional<Todo> getOne(Long id){
-//		Optional<Todo> todo = todoRepository.findById(id);
-//		return todo;
-//	}
+	@GetMapping("/todos/id/{id}")
+	public Todo getOne(@PathVariable Long id){
+		Optional<Todo> todo = todoRepository.findById(id);
+		return todo.get();
+	}
 	
 	@GetMapping("/todos/{username}")
 	public List<Todo> getAll(@PathVariable String username ){
